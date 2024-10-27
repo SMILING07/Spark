@@ -44,11 +44,6 @@ def commands(query):
         except:
             response=wikipedia.summary(query)
             return 'Acoording to wikipedia\n'+response
-def animate_start():
-    label_main     = Label(root,bg=bgc)
-    label_main.place(relheight=0.999,relwidth=0.999,relx=0.0001,rely=0.0001)
-    player         = tkvideo.tkvideo("Animations//#4.mp4", label_main, loop = 0, size = (300,600))
-    player.play()
 def appfunc():
     global root,frame,frame1,frame2,text,player,label,entry,send,bgc,fgc,user_text
     root           = Tk()
@@ -59,7 +54,7 @@ def appfunc():
     frame4         = Frame(root,bg=fgc)
     label          = Label(frame,bg=fgc)
     mic            = ImageTk.PhotoImage((Image.open('Pictures\\mic.png')).resize((20,20),Image.FILTERED))
-    player         = tkvideo.tkvideo("Animations//#2.mp4", label, loop = 1, size = (400,250))
+    player         = tkvideo.tkvideo("Animations//#4.mp4", label, loop = 1, size = (400,250))
     entry          = Entry(frame2,bg=fgc,fg=bgc,font=('Ariel',15),bd=0,highlightthickness=0)
     text           = Text(frame1,font=('impact',17),wrap='word')
     user_text      = Text(frame4,font=('impact',17),wrap='word')
