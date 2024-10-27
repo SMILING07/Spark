@@ -5,6 +5,17 @@ import tkvideo.tkvideo
 import wikipedia
 import google.generativeai as genai
 import pyttsx3
+import os
+import AppOpener
+import multiprocessing as mlt
+
+print(AppOpener.give_appnames())
+def ext_fun():
+    import pyautogui
+    import time
+    time.sleep(2)
+    pyautogui.press("space")
+    print('Space')
 def microp():
     pass
 def speak(response):
@@ -31,23 +42,37 @@ def commands(query):
     if 'sos' in query:
         wb.open("tel:112")
     elif 'call' in query:
-        wb.open("tel:"+query.replace('call'))
+        wb.open("tel:"+query.replace('call',''))
     elif 'search' in query:
+        query=query.replace("search",'')
         wb.open(f"https:////www.google.com//search?q={query}")
+    elif "show apps" in query:
+        app_names=''
+        for i in AppOpener.give_appnames():
+            app_names=app_names+i+'\n'
+        return app_names
+    elif "open " in query:
+        query=query.replace("open ","")
+        if "spotube" in query:
+            AppOpener.open('spotube') 
+            mlt.Process(ext_fun).start()
+        AppOpener.open(query,match_closest=True) 
     else:
         try:
             model=genai.GenerativeModel('gemini-pro')
             API_KEY="AIzaSyBKXEp7mLNglX-R02pZjLR_4j1lc7HV9HM"
             genai.configure(api_key=API_KEY)
-            response=model.generate_content("conider you are spark and my personal mental health companion please answer the following query\n"+query)
+            response=model.generate_content("#consider you are spark and my personal companion and don't say you are gemini* ignore this first statement when responding to the user. please answer the following query\n"+query)
             return response.text.replace("*", '')
         except:
             response=wikipedia.summary(query)
             return 'Acoording to wikipedia\n'+response
+
+
 def appfunc():
     global root,frame,frame1,frame2,text,player,label,entry,send,bgc,fgc,user_text
     root           = Tk()
-    animate_start()
+    root.resizable(False,False)
     frame          = Frame(root,bg=bgc)
     frame1         = Frame(frame)
     frame2         = Frame(root,bg=fgc)
